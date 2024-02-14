@@ -39,7 +39,7 @@ Let's add UI that connects to the backend data and auth resources.
 First, install the Amplify UI component library:
 
 ```bash
-npm install @aws-amplify/ui-react
+npm install 
 ```
 
 Next, create a `components` folder in the root of your project and the contents below to a file called `ConfigureAmplify.tsx`.
@@ -64,8 +64,7 @@ Update `app/layout.tsx` to import and render `<ConfigureAmplifyClientSide />`.  
 // app/layout.tsx
 import ConfigureAmplifyClientSide from "@/components/ConfigureAmplify";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
+import { Inter }
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -97,7 +96,6 @@ In `app/page.tsx`, update with the following code which import Amplify UI and wr
 "use client";
 
 import { withAuthenticator } from "@aws-amplify/ui-react";
-import "@aws-amplify/ui-react/styles.css";
 
 function App() {
   return (
@@ -122,30 +120,15 @@ Now, let's display data on our app's frontend. In the `components` directory cre
 
 import { useState, useEffect } from "react";
 import { generateClient } from "aws-amplify/data";
-import type { Schema } from "@/amplify/data/resource";
+import type { Schema } from "/amplify/data/resource";
 
 // generate your data client using the Schema from your backend
 const client = generateClient<Schema>();
-
-export default function TodoList() {
-  const [todos, setTodos] = useState<Schema["Todo"][]>([]);
-
-  async function listTodos() {
-    // fetch all todos
-    const { data } = await client.models.Todo.list();
-    setTodos(data);
   }
 
   useEffect(() => {
     listTodos();
-  }, []);
-
-  return (
-    <div>
-      <h1>Todos</h1>
-      <ul>
-        {todos.map((todo) => (
-          <li key={todo.id}>{todo.content}</li>
+  }, []
         ))}
       </ul>
     </div>
@@ -160,7 +143,7 @@ In `app/page.tsx`, import `components/TodoList` and render it:
 "use client";
 
 import { withAuthenticator } from "@aws-amplify/ui-react";
-import "@aws-amplify/ui-react/styles.css";
+import "react/styles.css";
 import TodoList from "@/components/TodoList";
 
 function App() {
@@ -190,17 +173,10 @@ Let's update the return statement of the `components/TodoList` component to have
       <button onClick={async () => {
         // create a new Todo with the following attributes
         const { errors, data: newTodo } = await client.models.Todo.create({
-          // prompt the user to enter the title
-          content: window.prompt("title"),
-          done: false,
-          priority: 'medium'
-        })
-        console.log(errors, newTodo);
-      }}>Create </button>
+          // prompt the user to enter 
 
       <ul>
-        {todos.map((todo) => (
-          <li key={todo.id}>{todo.content}</li>
+  
         ))}
       </ul>
     </div>
@@ -212,8 +188,6 @@ Create a couple of to-dos, then refresh the page to see them. You can also subsc
 
 ```js
 useEffect(() => {
-  const sub = client.models.Todo.observeQuery().subscribe(({ items }) =>
-   setTodos([...items])
   );
 
   return () => sub.unsubscribe();
@@ -227,3 +201,4 @@ Go to `localhost` in the browser to make sure you can now log in and create and 
 import deployAndHost from 'src/fragments/gen2/quickstart/deploy-and-host.mdx';
 
 <Fragments fragments={{ javascript: deployAndHost, nextjs: deployAndHost }} />
+
