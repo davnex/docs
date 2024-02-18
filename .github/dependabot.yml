@@ -6,4 +6,4 @@ updates:
       interval: "daily"
     allow:
       # Allow updates for any packages starting with "@aws-amplify"
-      - dependency-name: "@aws-amplify*"
+      - dependency-name:
